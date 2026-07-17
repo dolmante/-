@@ -40,26 +40,14 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            cursor: pointer;
         }
 
         /* メインレイアウト */
         .main-container {
-            max-width: 950px;
+            max-width: 800px; /* 1カラム用に幅を調整 */
             margin: 20px auto;
             padding: 0 15px;
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 20px;
-        }
-
-        /* スマホ対応 */
-        @media (max-width: 768px) {
-            .main-container {
-                grid-template-columns: 1fr;
-            }
-            .sidebar {
-                display: none;
-            }
         }
 
         /* メインニュースセクション */
@@ -69,6 +57,7 @@
             border-radius: 4px;
             padding: 20px;
             min-height: 400px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
 
         /* ヤフー風マルチタブメニュー */
@@ -108,7 +97,7 @@
         .topics-list {
             list-style: none;
             padding: 0;
-            margin: 0;
+            margin: 0 0 20px 0;
         }
 
         .topic-item {
@@ -118,6 +107,7 @@
             justify-content: space-between;
             align-items: center;
             font-size: 0.95rem;
+            gap: 15px; /* 右側の画像や時間との隙間 */
         }
 
         .topic-item:hover {
@@ -137,7 +127,7 @@
             line-height: 1;
         }
 
-        /* ジャンルバッジ（見出しの前に「[スポーツ]」などを表示） */
+        /* ジャンルバッジ */
         .topic-genre {
             font-size: 0.75rem;
             font-weight: bold;
@@ -165,11 +155,39 @@
             text-decoration: underline;
         }
 
+        /* 右側の情報をまとめるエリア */
+        .topic-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
         .topic-time {
             font-size: 0.8rem;
             color: var(--text-sub);
             white-space: nowrap;
-            margin-left: 10px;
+        }
+
+        /* 【新規】一覧用の小さなサムネイル */
+        .topic-thumbnail-container {
+            width: 60px;
+            height: 45px;
+            border-radius: 4px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .topic-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         /* リストが空の時のメッセージ */
@@ -178,6 +196,30 @@
             text-align: center;
             padding: 40px 0;
             font-size: 0.95rem;
+        }
+
+        /* --- 投稿ページへ進むボタン --- */
+        .go-post-container {
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            text-align: center;
+        }
+
+        .go-post-btn {
+            background-color: var(--yahoo-red);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background-color 0.2s;
+        }
+
+        .go-post-btn:hover {
+            background-color: #cc002c;
         }
 
         /* --- 記事詳細表示 --- */
@@ -203,6 +245,7 @@
         }
 
         .article-image-container {
+            display: none;
             width: 100%;
             max-height: 400px;
             overflow: hidden;
@@ -265,46 +308,42 @@
             background-color: #c0392b;
         }
 
-        /* --- 投稿フォーム --- */
-        .sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+        /* --- 投稿フォーム画面 --- */
+        .post-form-view {
+            display: none;
         }
 
         .form-card {
             background-color: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 20px;
+            padding: 10px 0;
         }
 
         .form-title {
-            font-size: 1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             border-bottom: 2px solid var(--yahoo-red);
             padding-bottom: 8px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .form-group {
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             font-weight: bold;
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
         input[type="text"], input[type="file"], select, textarea {
             width: 100%;
-            padding: 8px;
+            padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
         }
 
         input[type="file"] {
@@ -318,24 +357,45 @@
         }
 
         textarea {
-            height: 100px;
+            height: 150px;
             resize: none;
         }
 
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
         button.submit-btn {
-            width: 100%;
+            flex: 1;
             background-color: var(--yahoo-red);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 4px;
-            font-size: 0.9rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
         }
 
         button.submit-btn:hover {
             background-color: #cc002c;
+        }
+
+        .cancel-btn {
+            background-color: #e0e0e0;
+            color: #333;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .cancel-btn:hover {
+            background-color: #d0d0d0;
         }
 
         .clear-btn {
@@ -348,7 +408,8 @@
             padding: 0;
             text-align: right;
             display: block;
-            margin-top: 10px;
+            margin-top: 25px;
+            width: 100%;
         }
     </style>
 </head>
@@ -356,12 +417,13 @@
 
 <!-- ヘッダー -->
 <header>
-    <a href="#" class="header-logo" onclick="switchGenre('all'); return false;">しがないライター</a>
+    <div class="header-logo" onclick="goHome()">しがないライター</div>
 </header>
 
 <div class="main-container">
-    <!-- 左側：ニュースセクション -->
+    <!-- メインニュースセクション -->
     <main class="news-section">
+        
         <!-- ヤフー風ジャンル切り替えタブ -->
         <ul class="tab-menu" id="tabMenu">
             <li class="tab-item active" onclick="switchGenre('all')" id="tab-all">すべて</li>
@@ -370,14 +432,19 @@
             <li class="tab-item" onclick="switchGenre('movie')" id="tab-movie">映画</li>
         </ul>
 
-        <!-- 状態1: ニュース一覧表示 -->
+        <!-- ==================== 1. ニュース一覧画面 ==================== -->
         <div id="listView">
             <ul class="topics-list" id="topicsList">
                 <!-- 投稿がここに並びます -->
             </ul>
+
+            <!-- 一覧の一番下に設置した投稿ボタン -->
+            <div class="go-post-container">
+                <button class="go-post-btn" onclick="showPostFormView()">トピックスを投稿する</button>
+            </div>
         </div>
 
-        <!-- 状態2: 記事詳細表示 -->
+        <!-- ==================== 2. 記事詳細表示画面 ==================== -->
         <div id="articleView" class="article-view">
             <h1 class="article-title" id="artTitle">見出し</h1>
             <div class="article-meta" id="artMeta">配信日時</div>
@@ -395,53 +462,70 @@
                 <button class="delete-single-btn" id="deleteSingleBtn">この記事をボツにする (管理者)</button>
             </div>
         </div>
-    </main>
 
-    <!-- 右側：投稿フォーム -->
-    <aside class="sidebar">
-        <div class="form-card">
-            <div class="form-title">トピックスを投稿する</div>
-            <form id="bbsForm">
-                <div class="form-group">
-                    <label for="nameInput">執筆者 (ニックネーム)</label>
-                    <input type="text" id="nameInput" placeholder="しがないライター" maxlength="15">
-                </div>
-                <div class="form-group">
-                    <!-- ジャンル選択：デフォルトを「指定なし」に変更 -->
-                    <label for="genreSelect">掲載ジャンル</label>
-                    <select id="genreSelect">
-                        <option value="none">指定なし</option>
-                        <option value="entertainment">芸能</option>
-                        <option value="sports">スポーツ</option>
-                        <option value="movie">映画</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="titleInput">見出し (最大30文字)</label>
-                    <input type="text" id="titleInput" placeholder="記事の短い見出し" maxlength="30" required>
-                </div>
-                <div class="form-group">
-                    <label for="imageFileInput">画像をアップロード (任意)</label>
-                    <input type="file" id="imageFileInput" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <label for="contentInput">記事の本文</label>
-                    <textarea id="contentInput" placeholder="詳しい内容をここに書き込んでください" required></textarea>
-                </div>
-                <button type="submit" class="submit-btn">トピックスを掲載</button>
-            </form>
-            <button class="clear-btn" id="clearBtn">【管理者専用】すべての記事をボツにする</button>
+        <!-- ==================== 3. 新規投稿画面 ==================== -->
+        <div id="postFormView" class="post-form-view">
+            <div class="form-card">
+                <div class="form-title">新しいトピックスの執筆</div>
+                <form id="bbsForm">
+                    <div class="form-group">
+                        <label for="nameInput">執筆者 (ニックネーム)</label>
+                        <input type="text" id="nameInput" placeholder="しがないライター" maxlength="15">
+                    </div>
+                    <div class="form-group">
+                        <label for="genreSelect">掲載ジャンル</label>
+                        <select id="genreSelect">
+                            <option value="none">指定なし</option>
+                            <option value="entertainment">芸能</option>
+                            <option value="sports">スポーツ</option>
+                            <option value="movie">映画</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="titleInput">見出し (最大30文字)</label>
+                        <input type="text" id="titleInput" placeholder="記事の短い見出しを入力" maxlength="30" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageFileInput">画像をアップロード (任意)</label>
+                        <input type="file" id="imageFileInput" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="contentInput">記事の本文</label>
+                        <textarea id="contentInput" placeholder="詳しい内容をここに書き込んでください" required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="cancel-btn" onclick="showListView()">戻る</button>
+                        <button type="submit" class="submit-btn">記事を掲載する</button>
+                    </div>
+                </form>
+                <button class="clear-btn" id="clearBtn">【管理者専用】すべての記事をボツにする</button>
+            </div>
         </div>
-    </aside>
+
+    </main>
 </div>
 
 <script>
     const ADMIN_PASSWORD = "shiganai2026"; // 管理者用パスワード
-
     const STORAGE_KEY = 'yahoo_bbs_posts';
     let posts = [];
     let currentOpenPostId = null;
-    let currentGenre = 'all'; // 現在選択されている表示ジャンル ('all', 'entertainment', 'sports', 'movie')
+    let currentGenre = 'all'; 
+
+    // HTMLエスケープ処理
+    function escapeHTML(str) {
+        if (!str) return '';
+        return str.replace(/[&<>"']/g, function(match) {
+            const escape = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            };
+            return escape[match];
+        });
+    }
 
     // 初期化
     window.addEventListener('DOMContentLoaded', () => {
@@ -449,12 +533,11 @@
         if (savedPosts) {
             posts = JSON.parse(savedPosts);
         } else {
-            // ジャンルごとの初期サンプルデータ
             posts = [
                 {
                     id: 1,
                     name: "編集部",
-                    genre: "none", // 指定なし
+                    genre: "none",
                     title: "【重要】新機能「ジャンル指定なし」が追加されました",
                     image: "",
                     content: "掲載時にジャンルを「指定なし」にすると、一覧にバッジを表示せずシンプルな見た目で投稿ができます。\n\nもちろん「すべて（ぜんぶ）」のトピックス一覧にはきれいに格納されるので、気軽な雑記やニュースはこちらでどんどん投稿してみてください！",
@@ -475,7 +558,7 @@
         showListView();
     });
 
-    // フォーム送信
+    // フォーム送信イベント
     document.getElementById('bbsForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -507,7 +590,8 @@
             addNewPost(name, genre, title, '', content, timeString);
         }
 
-        // フォームクリア
+        // フォームのリセット
+        nameInput.value = '';
         titleInput.value = '';
         fileInput.value = '';
         contentInput.value = '';
@@ -517,7 +601,7 @@
         const newPost = {
             id: Date.now(),
             name: name,
-            genre: genre, // 'none', 'entertainment', 'sports', 'movie'
+            genre: genre, 
             title: title,
             image: imageSrc,
             content: content,
@@ -526,9 +610,10 @@
 
         posts.unshift(newPost);
         savePosts();
-        renderPosts();
         
-        // 投稿が「指定なし(none)」なら「すべて(all)」タブへ。それ以外なら選ばれたジャンルへ自動切り替え
+        // 投稿完了後に自動的に一覧に戻る
+        showListView();
+        
         if (genre === 'none') {
             switchGenre('all');
         } else {
@@ -544,7 +629,6 @@
         }
     }
 
-    // ジャンルの日本語名とバッジクラスを取得
     function getGenreInfo(genreCode) {
         switch(genreCode) {
             case 'entertainment':
@@ -558,12 +642,10 @@
         }
     }
 
-    // トピックス一覧の描画
     function renderPosts() {
         const list = document.getElementById('topicsList');
         list.innerHTML = '';
 
-        // 現在選択されているジャンルにフィルタリング
         const filteredPosts = currentGenre === 'all' 
             ? posts 
             : posts.filter(post => post.genre === currentGenre);
@@ -578,9 +660,17 @@
             const li = document.createElement('li');
             li.className = 'topic-item';
 
-            // バッジの表示有無を判定してHTMLを組み立て
             const badgeHTML = genreInfo.showBadge 
-                ? `<span class="topic-genre ${genreInfo.class}">${genreInfo.name}</span>` 
+                ? `<span class="topic-genre ${genreInfo.class}">${escapeHTML(genreInfo.name)}</span>` 
+                : '';
+
+            // 【新規】画像がある場合は小さなサムネイルHTMLを生成
+            const thumbnailHTML = post.image 
+                ? `
+                    <div class="topic-thumbnail-container" onclick="openNews(${post.id})">
+                        <img src="${post.image}" class="topic-thumbnail" alt="サムネイル">
+                    </div>
+                  `
                 : '';
 
             li.innerHTML = `
@@ -589,47 +679,59 @@
                     ${badgeHTML}
                     <span class="topic-title" onclick="openNews(${post.id})">${escapeHTML(post.title)}</span>
                 </div>
-                <span class="topic-time">${post.time}</span>
+                <div class="topic-right">
+                    <span class="topic-time">${escapeHTML(post.time)}</span>
+                    ${thumbnailHTML}
+                </div>
             `;
             list.appendChild(li);
         });
     }
 
-    // ジャンルタブ切り替え
+    // ロゴをクリックした時は一覧画面の「すべて」に戻る
+    window.goHome = function() {
+        switchGenre('all');
+    };
+
     window.switchGenre = function(genre) {
         currentGenre = genre;
 
         const tabs = document.querySelectorAll('.tab-menu .tab-item');
         tabs.forEach(tab => tab.classList.remove('active'));
-        document.getElementById(`tab-${genre}`).classList.add('active');
+        
+        const targetTab = document.getElementById(`tab-${genre}`);
+        if (targetTab) targetTab.classList.add('active');
 
         showListView();
-        renderPosts();
     };
 
-    // 一覧画面を表示
-    function showListView() {
+    // --- 画面表示切り替え処理群 ---
+
+    // 1. 一覧表示へ戻る
+    window.showListView = function() {
         document.getElementById('listView').style.display = 'block';
         document.getElementById('articleView').style.display = 'none';
+        document.getElementById('postFormView').style.display = 'none';
         document.getElementById('tabMenu').style.display = 'flex';
         currentOpenPostId = null;
-    }
+        renderPosts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 
-    // 記事詳細を表示
+    // 2. 記事詳細表示
     window.openNews = function(id) {
         const post = posts.find(p => p.id === id);
         if (!post) return;
 
         currentOpenPostId = id;
-
         document.getElementById('tabMenu').style.display = 'none';
 
         const genreInfo = getGenreInfo(post.genre);
         const genreLabel = genreInfo.showBadge ? ` - ジャンル: ${genreInfo.name}` : '';
 
-        document.getElementById('artTitle').innerText = post.title;
-        document.getElementById('artMeta').innerText = `${post.time}配信${genreLabel} - 著者: ${post.name}`;
-        document.getElementById('artBody').innerText = post.content;
+        document.getElementById('artTitle').textContent = post.title;
+        document.getElementById('artMeta').textContent = `${post.time}配信${genreLabel} - 著者: ${post.name}`;
+        document.getElementById('artBody').textContent = post.content;
 
         const imgContainer = document.getElementById('artImageContainer');
         const img = document.getElementById('artImage');
@@ -642,12 +744,23 @@
         }
 
         document.getElementById('listView').style.display = 'none';
+        document.getElementById('postFormView').style.display = 'none';
         document.getElementById('articleView').style.display = 'block';
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // パスワード照合
+    // 3. 投稿画面を表示する（一覧の下のボタンを押した時）
+    window.showPostFormView = function() {
+        document.getElementById('listView').style.display = 'none';
+        document.getElementById('articleView').style.display = 'none';
+        document.getElementById('tabMenu').style.display = 'none'; // 投稿中はジャンルタブを隠す
+        document.getElementById('postFormView').style.display = 'block';
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // 管理者確認
     function checkAdmin() {
         const password = prompt('管理者のパスワードを入力してください:');
         if (password === ADMIN_PASSWORD) {
@@ -658,44 +771,27 @@
         }
     }
 
-    // この記事だけボツにする
     document.getElementById('deleteSingleBtn').addEventListener('click', () => {
         if (currentOpenPostId) {
             if (checkAdmin()) {
                 posts = posts.filter(post => post.id !== currentOpenPostId);
                 savePosts();
-                renderPosts();
                 showListView();
                 alert('記事をボツにしました。');
             }
         }
     });
 
-    // すべて削除する
     document.getElementById('clearBtn').addEventListener('click', () => {
         if (checkAdmin()) {
             if (confirm('本当にすべての記事をボツ（削除）にしますか？')) {
                 posts = [];
                 savePosts();
-                renderPosts();
                 showListView();
                 alert('すべての記事をボツにしました。');
             }
         }
     });
-
-    function escapeHTML(str) {
-        return str.replace(/[&<>"']/g, function(match) {
-            const escape = {
-                '&': '&amp;',
-                '<': '&lt;',
-                '>': '&gt;',
-                '"': '&quot;',
-                "'": '&#39;'
-            };
-            return escape[match];
-        });
-    }
 </script>
 
 </body>
